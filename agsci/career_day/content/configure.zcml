@@ -11,4 +11,10 @@
         component=".vocabulary.MajorVocabularyFactory"
     />
 
+    <utility
+        name="agsci.career_day.positions_available"
+        provides="zope.schema.interfaces.IVocabularyFactory"
+        component=".vocabulary.PositionsAvailableVocabularyFactory"
+    />
+
 </configure>

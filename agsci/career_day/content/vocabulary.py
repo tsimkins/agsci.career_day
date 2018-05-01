@@ -62,7 +62,19 @@ class MajorVocabulary(StaticVocabulary):
         'Wildlife and Fisheries Science',
         'Forest Technology',
         'Turfgrass Science and Management (Online)',
-        'Wildlife Technology'
+        'Wildlife Technology',
+    ]
+
+class PositionsAvailableVocabulary(StaticVocabulary):
+
+    preserve_order = True
+
+    items = [
+        'Full Time',
+        'Part Time',
+        'Internship',
+        'Externship',
     ]
 
 MajorVocabularyFactory = MajorVocabulary()
+PositionsAvailableVocabularyFactory = PositionsAvailableVocabulary()

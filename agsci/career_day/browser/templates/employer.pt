@@ -10,7 +10,51 @@
 
     <metal:content-core fill-slot="content-core">
 
-        <h2>This is an employer.</h2>
+        <div class="contentLeadImageContainer"
+            tal:condition="view/has_logo">
+            <img tal:replace="structure view/tag" />
+        </div>
+
+        <tal:text
+            define="text context/text|nothing"
+            condition="text"
+            content="structure text/raw" />
+
+        <div class="visualClear"><!-- --></div>
+
+        <tal:website
+            define="website view/website|nothing"
+            condition="website">
+            <h2>Company Website</h2>
+            <p>
+                <a
+                    tal:attributes="href website"
+                    tal:content="website" />
+            </p>
+
+        </tal:website>
+
+        <tal:majors
+            define="majors view/majors|nothing"
+            condition="majors">
+            <h2>Majors</h2>
+            <ul>
+                <li tal:repeat="i majors"
+                    tal:content="i" />
+            </ul>
+        </tal:majors>
+
+        <tal:positions_available
+            define="positions_available view/positions_available|nothing"
+            condition="positions_available">
+            <h2>Positions Available</h2>
+            <ul>
+                <li tal:repeat="i positions_available"
+                    tal:content="i" />
+            </ul>
+        </tal:positions_available>
+
+        <div class="visualClear"><!-- --></div>
 
     </metal:content-core>
 

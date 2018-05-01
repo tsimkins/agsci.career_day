@@ -13,7 +13,7 @@ from plone.namedfile.field import NamedBlobImage
 @provider(IFormFieldProvider)
 class IEmployerContainer(model.Schema):
     pass
-    
+
 @provider(IFormFieldProvider)
 class IEmployer(model.Schema):
 
@@ -24,12 +24,19 @@ class IEmployer(model.Schema):
         required=True,
     )
 
+    positions_available = schema.List(
+        title=_(u"Position(s) Available"),
+        description=_(u""),
+        value_type=schema.Choice(vocabulary="agsci.career_day.positions_available"),
+        required=True,
+    )
+
     website = schema.TextLine(
         title=_(u"Employer Website"),
         description=_(u""),
         required=False,
     )
-    
+
     image = NamedBlobImage(
         title=_(u"Employer Logo"),
         description=_(u""),

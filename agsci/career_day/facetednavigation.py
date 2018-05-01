@@ -16,7 +16,7 @@ class Criteria(_Criteria):
 
     def getFields(self):
 
-        fields = ['majors',]
+        fields = ['majors', 'positions_available']
 
         for (key, field) in IEmployer.namesAndDescriptions():
 
