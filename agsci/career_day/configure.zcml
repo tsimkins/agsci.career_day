@@ -13,4 +13,14 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
+    <genericsetup:importStep
+        name="agsci.career_day"
+        title="agsci.career_day: setuphanders.import_various"
+        description=""
+        handler="agsci.career_day.setuphandlers.import_various"
+        />
+
+    <include package=".content" />
+    <include package=".browser" />
+
 </configure>

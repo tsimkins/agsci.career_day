@@ -1,0 +1,35 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:five="http://namespaces.zope.org/five"
+           xmlns:faceted="http://namespaces.zope.org/faceted"
+           i18n_domain="agsci.career_day">
+
+    <browser:page
+        name="view"
+        for="..content.IEmployer"
+        class=".views.EmployerView"
+        template="templates/employer.pt"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        permission="zope2.View"
+    />
+
+    <!-- Faceted Nav -->
+
+    <faceted:view
+        for="..content.IEmployerContainer"
+        name="faceted-preview-items"
+        template="templates/faceted_employers.pt"
+        title="Faceted items preview"
+        permission="zope2.View"
+        class=".views.PloneSiteView"
+    />
+
+    <browser:page
+        for="..content.IEmployerContainer"
+        name="faceted_query"
+        class=".views.PloneSiteFacetedQueryHandler"
+        template="templates/faceted_query.pt"
+        permission="zope2.View"
+    />
+
+</configure>
