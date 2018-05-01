@@ -75,6 +75,10 @@ class EmployerView(BaseView):
     def website(self):
         return getattr(self.context, 'website', None)
 
+    @property
+    def parent_url(self):
+        return self.context.aq_parent.absolute_url()
+
 class PloneSiteView(BaseView):
 
     def getQuery(self):

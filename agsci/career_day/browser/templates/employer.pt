@@ -56,6 +56,12 @@
 
         <div class="visualClear"><!-- --></div>
 
+        <p>
+            <a tal:attributes="href view/parent_url">
+                &larr; Back to Employer Listing
+            </a>
+        </p>
+
     </metal:content-core>
 
 </body>
