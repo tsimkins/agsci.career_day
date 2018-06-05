@@ -73,4 +73,21 @@
         permission="zope2.View"
     />
 
+    <browser:page
+        name="import_employers"
+        for="..content.IEmployerContainer"
+        class=".views.ImportEmployersView"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        template="templates/import_employers.pt"
+        permission="cmf.ManagePortal"
+    />
+
+    <browser:page
+        name="process_import_employers"
+        for="..content.IEmployerContainer"
+        class=".views.ProcessImportEmployersView"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        permission="cmf.ManagePortal"
+    />
+
 </configure>

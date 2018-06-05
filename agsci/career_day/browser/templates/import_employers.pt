@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="eea">
+
+<body>
+
+  <metal:content-core fill-slot="content-core">
+    <metal:block define-macro="content-core">
+
+        <h2>Upload a CSV file to create employers</h2>
+
+        <form method="post"
+            enctype="multipart/form-data"
+            tal:attributes="action string:${context/absolute_url}/process_import_employers">
+
+            <label for="csv">Upload CSV File</label>
+            <input name="csv" id="csv" type="file">
+
+            <div>
+                <input name="submit" type="submit" value="Upload">
+            </div>
+        </form>
+
+    </metal:block>
+  </metal:content-core>
+</body>
+</html>
