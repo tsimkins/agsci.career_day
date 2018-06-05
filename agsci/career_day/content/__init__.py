@@ -24,6 +24,13 @@ class IEmployer(model.Schema):
         required=True,
     )
 
+    class_year = schema.List(
+        title=_(u"Class Year(s)"),
+        description=_(u""),
+        value_type=schema.Choice(vocabulary="agsci.career_day.class_year"),
+        required=True,
+    )
+
     positions_available = schema.List(
         title=_(u"Position(s) Available"),
         description=_(u""),

@@ -65,6 +65,17 @@ class MajorVocabulary(StaticVocabulary):
         'Wildlife Technology',
     ]
 
+class ClassYearVocabulary(StaticVocabulary):
+
+    preserve_order = True
+
+    items = [
+        'Freshman',
+        'Sophomore',
+        'Junior',
+        'Senior',
+    ]
+
 class PositionsAvailableVocabulary(StaticVocabulary):
 
     preserve_order = True
@@ -77,4 +88,5 @@ class PositionsAvailableVocabulary(StaticVocabulary):
     ]
 
 MajorVocabularyFactory = MajorVocabulary()
+ClassYearVocabularyFactory = ClassYearVocabulary()
 PositionsAvailableVocabularyFactory = PositionsAvailableVocabulary()

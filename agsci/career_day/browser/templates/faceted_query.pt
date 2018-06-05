@@ -10,22 +10,36 @@
     getKssClasses nocall:kssClassesView/getKssClassesInlineEditable | nothing;
     templateId template/getId | nothing">
 
+    <p>
+        <a tal:attributes="href string:${context/absolute_url}/@@all">
+            See All Employers
+        </a>
+    </p>
+
+    <tal:main
+        condition="view/filtered_results">
+
+        <h2>Search Results</h2>
+
+        <tal:noresults tal:condition="not: folderContents">
+            <p class="discreet">
+                No results found.
+            </p>
+        </tal:noresults>
+
+        <tal:results tal:condition="folderContents">
+            <p class="discreet">
+                <strong tal:content="python: len(folderContents)" /> result(s).
+            </p>
+        </tal:results>
+
         <metal:items metal:define-macro="items">
 
-            <tal:items repeat="brain folderContents">
-                <div class="tileItem">
-                    <div class="tileTitle">
-                        <a tal:define="wf_state brain/review_state|nothing;
-                                       wf_state_class python:'state-' + normalizeString(wf_state);"
-                           tal:attributes="href brain/getURL;
-                                           class wf_state_class"
-                           tal:content="brain/Title" />
-                    </div>
-                    <div class="tileDescription" tal:content="brain/Description" />
-                </div>
-            </tal:items>
+            <metal:items metal:use-macro="context/@@all/macros/listing" />
 
         </metal:items>
+
+    </tal:main>
 
   </tal:def>
 </tal:main>

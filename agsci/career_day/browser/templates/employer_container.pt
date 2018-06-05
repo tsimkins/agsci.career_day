@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="eea">
+
+<body>
+
+  <metal:content-core fill-slot="content-core">
+    <metal:block define-macro="content-core">
+
+        <p>
+            <a tal:attributes="href context/absolute_url">
+                Filter Employers
+            </a>
+        </p>
+
+        <tal:items
+            tal:define="folderContents view/getFolderContents">
+
+            <metal:listing metal:define-macro="listing">
+
+                <tal:items repeat="brain folderContents">
+                    <div class="tileItem"
+                        tal:define="normalizeString nocall: context/plone_utils/normalizeString;
+                                    item_wf_state brain/review_state|nothing;
+                                    item_wf_state_class python:'state-' + normalizeString(item_wf_state)">
+                        <h3>
+                            <a tal:attributes="href brain/getURL;
+                                                class string: $item_wf_state_class;"
+                                tal:omit-tag="view/anonymous">
+                                <span tal:replace="brain/Title" />
+                            </a>
+                        </h3>
+                        <div>
+                            <tal:html
+                                tal:define="employer_html python: view.get_html(brain)"
+                                tal:content="structure employer_html" />
+                        </div>
+                    </div>
+                </tal:items>
+
+            </metal:listing>
+        </tal:items>
+
+    </metal:block>
+  </metal:content-core>
+</body>
+</html>
+

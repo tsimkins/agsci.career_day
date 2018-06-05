@@ -13,7 +13,39 @@
         permission="zope2.View"
     />
 
+    <browser:page
+        name="content"
+        for="..content.IEmployer"
+        class=".views.EmployerView"
+        template="templates/employer_content.pt"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        permission="zope2.View"
+    />
+
+    <browser:viewlet
+        name="agsci.career_day.banner"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+        class=".viewlets.BannerViewlet"
+        permission="zope2.View"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        for="..content.IEmployerContainer"
+        template="templates/banner.pt"
+    />
+
     <!-- Faceted Nav -->
+
+
+    <browser:resource
+        name="eea.facetednavigation.widgets.select.view.js"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        file="./templates/widget-select-view.js"
+    />
+
+    <browser:resource
+        name="banner.png"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        file="resources/banner.png"
+    />
 
     <faceted:view
         for="..content.IEmployerContainer"
@@ -21,7 +53,7 @@
         template="templates/faceted_employers.pt"
         title="Faceted items preview"
         permission="zope2.View"
-        class=".views.PloneSiteView"
+        class=".views.EmployerContainerView"
     />
 
     <browser:page
@@ -29,6 +61,15 @@
         name="faceted_query"
         class=".views.PloneSiteFacetedQueryHandler"
         template="templates/faceted_query.pt"
+        permission="zope2.View"
+    />
+
+    <browser:page
+        name="all"
+        for="..content.IEmployerContainer"
+        class=".views.EmployerContainerView"
+        template="templates/employer_container.pt"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
         permission="zope2.View"
     />
 

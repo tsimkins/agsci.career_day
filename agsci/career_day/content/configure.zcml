@@ -12,6 +12,12 @@
     />
 
     <utility
+        name="agsci.career_day.class_year"
+        provides="zope.schema.interfaces.IVocabularyFactory"
+        component=".vocabulary.ClassYearVocabularyFactory"
+    />
+
+    <utility
         name="agsci.career_day.positions_available"
         provides="zope.schema.interfaces.IVocabularyFactory"
         component=".vocabulary.PositionsAvailableVocabularyFactory"

@@ -1,10 +1,11 @@
 from eea.facetednavigation.browser.app.query import FacetedQueryHandler
 from eea.facetednavigation.caching import ramcache
 from eea.facetednavigation.caching import cacheKeyFacetedNavigation
+from eea.facetednavigation.interfaces import ICriteria
 from plone.app.textfield.value import RichTextValue
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 from zope.schema import getFieldsInOrder
 from zope.schema.interfaces import IVocabularyFactory
 
@@ -16,7 +17,16 @@ class BaseView(BrowserView):
     def portal_catalog(self):
         return getToolByName(self.context, 'portal_catalog')
 
+    @property
+    def anonymous(self):
+        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        return portal_state.anonymous()
+
 class EmployerView(BaseView):
+
+    @property
+    def description(self):
+        return self.context.Description()
 
     @property
     def has_logo(self):
@@ -46,13 +56,13 @@ class EmployerView(BaseView):
 
         return []
 
-    @property
-    def positions_available(self):
-        v = getattr(self.context, 'positions_available', [])
+    def sorted_field_values(self, field, vocab_name):
+
+        v = getattr(self.context, field, [])
 
         if v and isinstance(v, (list, tuple)):
 
-            vocab = getUtility(IVocabularyFactory, "agsci.career_day.positions_available")
+            vocab = getUtility(IVocabularyFactory, vocab_name)
 
             values = vocab(self.context)
 
@@ -64,12 +74,26 @@ class EmployerView(BaseView):
 
                     try:
                         return values.index(x)
-                    except IndexError:
+                    except (ValueError, IndexError):
                         return 99999
 
                 return sorted(v, key=sort_key)
 
         return []
+
+    @property
+    def class_year(self):
+        return self.sorted_field_values(
+            'class_year',
+            'agsci.career_day.class_year'
+        )
+
+    @property
+    def positions_available(self):
+        return self.sorted_field_values(
+            'positions_available',
+            'agsci.career_day.positions_available'
+        )
 
     @property
     def website(self):
@@ -79,7 +103,7 @@ class EmployerView(BaseView):
     def parent_url(self):
         return self.context.aq_parent.absolute_url()
 
-class PloneSiteView(BaseView):
+class EmployerContainerView(BaseView):
 
     def getQuery(self):
         return {'Type' : 'Employer', 'sort_on' : 'sortable_title'}
@@ -87,18 +111,44 @@ class PloneSiteView(BaseView):
     def getFolderContents(self):
         return self.portal_catalog.searchResults(self.getQuery())
 
+    def get_html(self, r):
+        o = r.getObject()
+        v = o.restrictedTraverse('@@content')
+        return v()
 
-class PloneSiteFacetedQueryHandler(PloneSiteView, FacetedQueryHandler):
+class PloneSiteFacetedQueryHandler(EmployerContainerView, FacetedQueryHandler):
+
+    @property
+    def faceted_query(self, sort=False, **kwargs):
+        return super( PloneSiteFacetedQueryHandler, self).criteria(sort, **kwargs)
+
+    @property
+    def filtered_results(self):
+        keys = self.faceted_query.keys()
+
+        criteria = ICriteria(self.context)
+
+        for cid, criterion in criteria.items():
+            try:
+                idx = criterion.index
+            except AttributeError:
+                pass # Not index-based
+            else:
+                if idx in keys:
+                    return True
 
     def criteria(self, sort=False, **kwargs):
         query = self.getQuery()
-        faceted_query = super( PloneSiteFacetedQueryHandler, self).criteria(sort, **kwargs)
-        query.update(faceted_query)
+        query.update(self.faceted_query)
         return query
 
     @ramcache(cacheKeyFacetedNavigation, dependencies=['eea.facetednavigation'])
     def __call__(self, *args, **kwargs):
-        kwargs['batch'] = False
-        self.brains = self.query(**kwargs)
-        html = self.index()
-        return html
+
+        if not self.filtered_results:
+            self.brains = []
+        else:
+            kwargs['batch'] = False
+            self.brains = self.query(**kwargs)
+
+        return self.index()

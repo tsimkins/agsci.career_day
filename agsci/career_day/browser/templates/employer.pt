@@ -1,68 +1,21 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="context/main_template/macros/master"
-      i18n:domain="plone">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  metal:use-macro="context/main_template/macros/master"
+  i18n:domain="eea">
 
 <body>
 
-    <metal:content-core fill-slot="content-core">
+  <metal:content-core fill-slot="content-core">
+    <metal:block define-macro="content-core">
 
-        <div class="contentLeadImageContainer"
-            tal:condition="view/has_logo">
-            <img tal:replace="structure view/tag" />
-        </div>
+        <metal:content-core
+            metal:use-macro="context/@@content/macros/content-core">
+            <metal:description fill-slot="description" />
+        </metal:content-core>
 
-        <tal:text
-            define="text context/text|nothing"
-            condition="text"
-            content="structure text/raw" />
-
-        <div class="visualClear"><!-- --></div>
-
-        <tal:website
-            define="website view/website|nothing"
-            condition="website">
-            <h2>Company Website</h2>
-            <p>
-                <a
-                    tal:attributes="href website"
-                    tal:content="website" />
-            </p>
-
-        </tal:website>
-
-        <tal:majors
-            define="majors view/majors|nothing"
-            condition="majors">
-            <h2>Majors</h2>
-            <ul>
-                <li tal:repeat="i majors"
-                    tal:content="i" />
-            </ul>
-        </tal:majors>
-
-        <tal:positions_available
-            define="positions_available view/positions_available|nothing"
-            condition="positions_available">
-            <h2>Positions Available</h2>
-            <ul>
-                <li tal:repeat="i positions_available"
-                    tal:content="i" />
-            </ul>
-        </tal:positions_available>
-
-        <div class="visualClear"><!-- --></div>
-
-        <p>
-            <a tal:attributes="href view/parent_url">
-                &larr; Back to Employer Listing
-            </a>
-        </p>
-
-    </metal:content-core>
-
+    </metal:block>
+  </metal:content-core>
 </body>
 </html>

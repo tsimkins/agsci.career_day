@@ -16,7 +16,7 @@ class Criteria(_Criteria):
 
     def getFields(self):
 
-        fields = ['majors', 'positions_available']
+        fields = ['majors', 'class_year', 'positions_available']
 
         for (key, field) in IEmployer.namesAndDescriptions():
 
@@ -41,19 +41,19 @@ class Criteria(_Criteria):
 
                 yield Criterion(
                     _cid_=cid,
-                    widget="checkbox",
+                    widget="select",
                     title=title,
                     index=key,
                     operator="or",
                     operator_visible=False,
                     vocabulary=vocabulary_name,
-                    position="right",
+                    position="top",
                     section="default",
                     hidden=False,
                     count=True,
                     catalog=catalog,
                     sortcountable=False,
-                    hidezerocount=False,
+                    hidezerocount=True,
                     maxitems=50,
                     sortreversed=False,
                 )
@@ -76,27 +76,19 @@ class Criteria(_Criteria):
     def __criteria(self):
 
         criteria = [
-                Criterion(
-                    widget="criteria",
-                    title="Current search",
-                    position="center",
-                    section="default",
-                    hidden=False,
-                ),
-                Criterion(
-                    _cid_="SearchableText",
-                    widget="text",
-                    title="Search Employers",
-                    index="SearchableText",
-                    position="right",
-                    section="default",
-                    wildcard=True,
-                    onlyallelements=True,
-                    hidden=False,
-                )
+            Criterion(
+                _cid_="SearchableText",
+                widget="text",
+                title="Search Employers",
+                index="SearchableText",
+                position="top",
+                section="default",
+                wildcard=True,
+                onlyallelements=True,
+                hidden=False,
+            )
         ]
 
         criteria.extend(self.getFields())
 
         return PersistentList(criteria)
-

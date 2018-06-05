@@ -38,6 +38,7 @@ def add_catalog_indexes(context, logger=None):
     # Specify the indexes you want, with ('index_name', 'index_type')
     wanted = [
                 ('majors', 'KeywordIndex'),
+                ('class_year', 'KeywordIndex'),
                 ('positions_available', 'KeywordIndex'),
              ]
 
