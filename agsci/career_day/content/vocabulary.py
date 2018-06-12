@@ -43,26 +43,23 @@ class KeyValueVocabulary(object):
 class MajorVocabulary(StaticVocabulary):
 
     items = [
-        'Agribusiness Management',
-        'Agricultural and Extension Education',
-        'Agricultural Science',
-        'Animal Science',
-        'Biological Engineering',
-        'BioRenewable Systems',
-        'Community, Environment, and Development',
-        'Environmental Resource Management',
-        'Food Science',
-        'Forest Ecosystem Management',
-        'Immunology and Infectious Disease',
-        'Landscape Contracting',
-        'Plant Sciences',
-        'Toxicology',
-        'Turfgrass Science',
-        'Veterinary and Biomedical Sciences',
-        'Wildlife and Fisheries Science',
-        'Forest Technology',
-        'Turfgrass Science and Management (Online)',
-        'Wildlife Technology',
+        u'Agribusiness Management',
+        u'Agricultural & Extension Education',
+        u'Agricultural Science',
+        u'Animal Science',
+        u'Biological Engineering',
+        u'BioRenewable Systems',
+        u'Community, Environment & Development',
+        u'Environmental Resource Management',
+        u'Food Science',
+        u'Forest Ecosystem Management',
+        u'Immunology & Infectious Disease',
+        u'Landscape Contracting',
+        u'Plant Sciences (Agroecology, Crop Production, Horticulture, Plant Gentics and Biotechnology, Plant Science)',
+        u'Toxicology',
+        u'Turfgrass Science',
+        u'Veterinary & Biomedical Sciences',
+        u'Wildlife & Fisheries Science'
     ]
 
 class ClassYearVocabulary(StaticVocabulary):
@@ -70,10 +67,10 @@ class ClassYearVocabulary(StaticVocabulary):
     preserve_order = True
 
     items = [
-        'Freshman',
-        'Sophomore',
-        'Junior',
-        'Senior',
+        u'Senior',
+        u'Junior',
+        u'Sophomore',
+        u'Freshman'
     ]
 
 class PositionsAvailableVocabulary(StaticVocabulary):
@@ -81,10 +78,13 @@ class PositionsAvailableVocabulary(StaticVocabulary):
     preserve_order = True
 
     items = [
-        'Full Time',
-        'Part Time',
-        'Internship',
-        'Externship',
+        u'Full Time',
+        u'Part Time',
+        u'Internship',
+        u'Externship',
+        u'Seasonal',
+        u'Co-op',
+        u'Other'
     ]
 
 MajorVocabularyFactory = MajorVocabulary()
