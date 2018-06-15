@@ -12,7 +12,7 @@
 
     <p>
         <a tal:attributes="href string:${context/absolute_url}/@@all">
-            See All Employers
+            View a list of all registered exhibitors
         </a>
     </p>
 

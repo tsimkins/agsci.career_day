@@ -14,11 +14,26 @@ from content import IEmployer
 @implementer(ICriteria)
 class Criteria(_Criteria):
 
+    titles = {
+        'majors' : 'Search by your Academic Major',
+        'class_year' : 'Search by your Class Level',
+        'positions_available' : 'Search by Position Type',
+    }
+
+    def get_title(self, field):
+        return self.titles.get(field.getName(), field.title)
+
     def getFields(self):
 
         fields = ['majors', 'class_year', 'positions_available']
 
-        for (key, field) in IEmployer.namesAndDescriptions():
+        def sort_key(_):
+            try:
+                return fields.index(_[0])
+            except ValueError:
+                return 99999
+
+        for (key, field) in sorted(IEmployer.namesAndDescriptions(), key=sort_key):
 
             if key in fields:
 
@@ -37,7 +52,7 @@ class Criteria(_Criteria):
                     catalog = ""
 
                 # Title is the field title
-                title = field.title
+                title = self.get_title(field)
 
                 yield Criterion(
                     _cid_=cid,
@@ -79,7 +94,7 @@ class Criteria(_Criteria):
             Criterion(
                 _cid_="SearchableText",
                 widget="text",
-                title="Search Employers",
+                title="Search for exhibitors by Name or Keyword",
                 index="SearchableText",
                 position="top",
                 section="default",
