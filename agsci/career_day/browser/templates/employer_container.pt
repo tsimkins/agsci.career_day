@@ -10,7 +10,7 @@
   <metal:content-core fill-slot="content-core">
     <metal:block define-macro="content-core">
 
-        <p>
+        <p class="print-hidden">
             <a tal:attributes="href context/absolute_url">
                 Filter Employers
             </a>
@@ -20,27 +20,27 @@
             tal:define="folderContents view/getFolderContents">
 
             <metal:listing metal:define-macro="listing">
-
-                <tal:items repeat="brain folderContents">
-                    <div class="tileItem"
-                        tal:define="normalizeString nocall: context/plone_utils/normalizeString;
-                                    item_wf_state brain/review_state|nothing;
-                                    item_wf_state_class python:'state-' + normalizeString(item_wf_state)">
-                        <h3>
-                            <a tal:attributes="href brain/getURL;
-                                                class string: $item_wf_state_class;"
-                                tal:omit-tag="view/anonymous">
-                                <span tal:replace="brain/Title" />
-                            </a>
-                        </h3>
-                        <div>
-                            <tal:html
-                                tal:define="employer_html python: view.get_html(brain)"
-                                tal:content="structure employer_html" />
+                <div class="faceted-results">
+                    <tal:items repeat="brain folderContents">
+                        <div class="tileItem"
+                            tal:define="normalizeString nocall: context/plone_utils/normalizeString;
+                                        item_wf_state brain/review_state|nothing;
+                                        item_wf_state_class python:'state-' + normalizeString(item_wf_state)">
+                            <h3>
+                                <a tal:attributes="href brain/getURL;
+                                                    class string: $item_wf_state_class;"
+                                    tal:omit-tag="view/anonymous">
+                                    <span tal:replace="brain/Title" />
+                                </a>
+                            </h3>
+                            <div>
+                                <tal:html
+                                    tal:define="employer_html python: view.get_html(brain)"
+                                    tal:content="structure employer_html" />
+                            </div>
                         </div>
-                    </div>
-                </tal:items>
-
+                    </tal:items>
+                </div>
             </metal:listing>
         </tal:items>
 

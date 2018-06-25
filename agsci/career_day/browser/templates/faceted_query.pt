@@ -10,7 +10,7 @@
     getKssClasses nocall:kssClassesView/getKssClassesInlineEditable | nothing;
     templateId template/getId | nothing">
 
-    <p>
+    <p class="print-hidden">
         <a tal:attributes="href string:${context/absolute_url}/@@all">
             View a list of all registered exhibitors
         </a>
@@ -19,16 +19,16 @@
     <tal:main
         condition="view/filtered_results">
 
-        <h2>Search Results</h2>
+        <h2 class="print-hidden">Search Results</h2>
 
         <tal:noresults tal:condition="not: folderContents">
-            <p class="discreet">
+            <p class="discreet print-hidden">
                 No results found.
             </p>
         </tal:noresults>
 
         <tal:results tal:condition="folderContents">
-            <p class="discreet">
+            <p class="discreet print-hidden">
                 <strong tal:content="python: len(folderContents)" /> result(s).
             </p>
         </tal:results>
