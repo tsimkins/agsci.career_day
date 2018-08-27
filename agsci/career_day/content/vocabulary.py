@@ -49,17 +49,17 @@ class MajorVocabulary(StaticVocabulary):
         u'Animal Science',
         u'Biological Engineering',
         u'BioRenewable Systems',
-        u'Community, Environment & Development',
+        u'Community Environment & Development',
         u'Environmental Resource Management',
         u'Food Science',
         u'Forest Ecosystem Management',
         u'Immunology & Infectious Disease',
         u'Landscape Contracting',
-        u'Plant Sciences (Agroecology, Crop Production, Horticulture, Plant Gentics and Biotechnology, Plant Science)',
+        u'Plant Sciences',
         u'Toxicology',
         u'Turfgrass Science',
         u'Veterinary & Biomedical Sciences',
-        u'Wildlife & Fisheries Science'
+        u'Wildlife & Fisheries Science',
     ]
 
 class ClassYearVocabulary(StaticVocabulary):
@@ -84,7 +84,7 @@ class PositionsAvailableVocabulary(StaticVocabulary):
         u'Externship',
         u'Seasonal',
         u'Co-op',
-        u'Other'
+        u'Other',
     ]
 
 MajorVocabularyFactory = MajorVocabulary()

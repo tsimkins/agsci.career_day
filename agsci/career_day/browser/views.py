@@ -5,6 +5,7 @@ from eea.facetednavigation.interfaces import ICriteria
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
 from plone.namedfile.file import NamedBlobImage
+from BeautifulSoup import BeautifulSoup
 from Products.agCommon import ploneify
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
@@ -162,10 +163,11 @@ class PloneSiteFacetedQueryHandler(EmployerContainerView, FacetedQueryHandler):
         return self.index()
 
 class ImportEmployersView(BaseView):
-
     pass
 
 class ProcessImportEmployersView(BaseView):
+
+    valid_image_types = ('image/png', 'image/jpeg', 'image/gif')
 
     transforms = {
         'interested_in_students_in_the_following_program_areas_check_all_that_may_apply' : 'majors',
@@ -173,8 +175,10 @@ class ProcessImportEmployersView(BaseView):
         'company_description_please_limit_to_space_provided_100200_words' : 'description',
         'my_organization_is_interested_in_recruiting_students_in_the_following_class_levels_check_all_that_apply' : 'class_year',
         'company_name' : 'title',
+        'company' : 'title',
         'positions_available_check_all_that_may_apply' : 'positions_available',
         'organization_company_web_site_url' : 'website',
+        'organization_company_website' : 'website',
         'registration_type' : 'registration_type',
     }
 
@@ -198,7 +202,9 @@ class ProcessImportEmployersView(BaseView):
 
         data = []
 
-        reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+        filename = csv_file.name
+
+        reader = csv.reader(open(filename, 'rU'), delimiter=',', quotechar='"')
 
         rows = [x for x in reader]
 
@@ -207,40 +213,61 @@ class ProcessImportEmployersView(BaseView):
 
         for row in rows:
 
-            _ = dict(zip(headers, row))
+            decoded_row = [x.decode('cp1252') for x in row]
 
-            if _['registration_type'] in [
-                'Corporate',
-                'Academic/University',
-            ]:
+            _ = dict(zip(headers, decoded_row))
 
-                if _.has_key(''):
-                    del _['']
+            if _.has_key(''):
+                del _['']
 
-                for k in ['class_year', 'majors', 'positions_available']:
-                    if _.has_key(k):
-                        _[k] = [x.strip() for x in _[k].split(',')]
-                        _[k] = self.vocab_filter(k, _[k])
+            for k in ['class_year', 'majors', 'positions_available']:
+                if _.has_key(k):
+                    _[k] = [x.strip() for x in _[k].split(',')]
+                    _[k] = self.vocab_filter(k, _[k])
 
-                # Website
-                website = _.get('website', None)
+            # Website
+            website = _.get('website', None)
 
-                if website:
-                    if not website.startswith(('http://', 'https://')):
-                        _['website'] = 'http://%s' % website
+            if website:
+                if not website.startswith(('http://', 'https://')):
+                    _['website'] = 'http://%s' % website
 
-                data.append(_)
+            data.append(_)
 
         return data
+
+    def get_image_url(self, image):
+        if image:
+            image = image.strip()
+
+            if image.startswith('<a'):
+                soup = BeautifulSoup(image)
+                href = soup.find('a').get('href', '')
+
+                if href:
+                    return href
+
+            return image
 
     def get_image(self, _):
         image = _.get('image', None)
 
         if image:
-            response = requests.get(image)
 
-            if response.status_code in [200]:
-                return response.content
+            image_url = self.get_image_url(image)
+
+            try:
+                response = requests.get(image_url)
+            except:
+                pass
+            else:
+
+
+                if response.status_code in [200]:
+                    if response.headers.get('Content-Type', None) in self.valid_image_types:
+                        return response.content
+                    else:
+                        print "ERROR in Content-Type: %s" % image_url
 
     def get_vocab_values(self, field):
 
@@ -270,8 +297,20 @@ class ProcessImportEmployersView(BaseView):
 
         values = self.get_vocab_values(k)
 
+        # Remove 'Other' positions available
+        if k in ('positions_available',):
+            for i in range(0, len(v)):
+                if v[i].startswith('Other'):
+                    v[i] = 'Other'
+
         if values:
+            invalid_values = set(v) - set(values)
+
+            if invalid_values:
+                raise ValueError(u"Invalid values for %s: %r" % (k, list(invalid_values)))
+
             v = set(values) & set(v)
+
             return list(v)
 
         return []
