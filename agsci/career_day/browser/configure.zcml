@@ -31,6 +31,16 @@
         for="..content.IEmployerContainer"
         template="templates/banner.pt"
     />
+    
+    <browser:viewlet
+        name="agsci.career_day.video"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
+        class=".viewlets.VideoViewlet"
+        permission="zope2.View"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        for="..content.IEmployerContainer"
+        template="templates/video.pt"
+    />
 
     <!-- Faceted Nav -->
 
