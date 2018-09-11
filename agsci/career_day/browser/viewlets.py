@@ -5,3 +5,6 @@ class BannerViewlet(AgCommonViewlet):
 
 class VideoViewlet(AgCommonViewlet):
     pass
+
+class UpdatedDateViewlet(AgCommonViewlet):
+    pass

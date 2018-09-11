@@ -42,6 +42,16 @@
         template="templates/video.pt"
     />
 
+    <browser:viewlet
+        name="agsci.career_day.updated_date"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+        class=".viewlets.UpdatedDateViewlet"
+        permission="zope2.View"
+        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        for="..content.IEmployerContainer"
+        template="templates/updated_date.pt"
+    />
+
     <!-- Faceted Nav -->
 
 

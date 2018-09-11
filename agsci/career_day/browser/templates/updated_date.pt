@@ -1,0 +1,8 @@
+<div class="updated"
+    tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+
+    <p class="discreet">
+        Last Updated: <strong tal:content="python:toLocalizedTime(context.effective(), long_format=0)" />
+    </p>
+
+</div>
