@@ -1,5 +1,5 @@
 <div id="ag-career-day-banner">
     <a tal:attributes="href here/absolute_url">
-        <img src="++resource++banner.png" alt="Ag Sciences Career Day is October 9th, 9:00am to 3:30pm at the Bryce Jordan Center" />
+        <img src="++resource++banner.png" alt="Ag Sciences Career Day is October 8th, 10:00am to 3:30pm at the Bryce Jordan Center" />
     </a>
 </div>
