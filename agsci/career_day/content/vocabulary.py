@@ -60,6 +60,7 @@ class MajorVocabulary(StaticVocabulary):
         u'Turfgrass Science',
         u'Veterinary & Biomedical Sciences',
         u'Wildlife & Fisheries Science',
+        u'Graduate Programs',
     ]
 
 class ClassYearVocabulary(StaticVocabulary):
@@ -87,6 +88,7 @@ class PositionsAvailableVocabulary(StaticVocabulary):
         u'Seasonal',
         u'Co-op',
         u'Other',
+        u'Graduate or Professional School',
     ]
 
 MajorVocabularyFactory = MajorVocabulary()
