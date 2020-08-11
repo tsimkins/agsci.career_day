@@ -70,7 +70,9 @@ class ClassYearVocabulary(StaticVocabulary):
         u'Senior',
         u'Junior',
         u'Sophomore',
-        u'Freshman'
+        u'Freshman',
+        u'Alumni',
+        u'Graduate Student',
     ]
 
 class PositionsAvailableVocabulary(StaticVocabulary):
