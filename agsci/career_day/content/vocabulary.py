@@ -56,7 +56,7 @@ class MajorVocabulary(StaticVocabulary):
         u'Immunology & Infectious Disease',
         u'Landscape Contracting',
         u'Plant Sciences',
-        u'Toxicology',
+        u'Pharmacology and Toxicology',
         u'Turfgrass Science',
         u'Veterinary & Biomedical Sciences',
         u'Wildlife & Fisheries Science',
