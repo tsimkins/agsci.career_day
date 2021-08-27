@@ -180,8 +180,11 @@ class ProcessImportEmployersView(BaseView):
         'organization_company_web_site_url' : 'website',
         'organization_company_website' : 'website',
         'registration_type' : 'registration_type',
+        'interested_in_recruiting_for_the_following_positions' : 'positions_available',
+        'interested_in_recruiting_for_class_level' : 'class_year',
         'majors_interested_in_recruiting' : 'majors',
         'organization_description_to_be_included_in_event_materials_please_limit_to_space_provided_max_200_words' : 'description',
+        'please_upload_a_high_resolution_organization_logo_here_jpeg_or_gif_format' : 'image',
     }
 
     def format_key(self, name):
