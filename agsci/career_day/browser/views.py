@@ -180,6 +180,8 @@ class ProcessImportEmployersView(BaseView):
         'organization_company_web_site_url' : 'website',
         'organization_company_website' : 'website',
         'registration_type' : 'registration_type',
+        'majors_interested_in_recruiting' : 'majors',
+        'organization_description_to_be_included_in_event_materials_please_limit_to_space_provided_max_200_words' : 'description',
     }
 
     def format_key(self, name):
