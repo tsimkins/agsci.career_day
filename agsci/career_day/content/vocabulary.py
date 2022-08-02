@@ -56,7 +56,7 @@ class MajorVocabulary(StaticVocabulary):
         u'Immunology & Infectious Disease',
         u'Landscape Contracting',
         u'Plant Sciences',
-        u'Pharmacology and Toxicology',
+        u'Pharmacology & Toxicology',
         u'Turfgrass Science',
         u'Veterinary & Biomedical Sciences',
         u'Wildlife & Fisheries Science',
@@ -78,6 +78,7 @@ class ClassYearVocabulary(StaticVocabulary):
         u'Second-year',
         u'Third-year',
         u'Fourth-year or above',
+        u"Fourth-year and Above",
     ]
 
 class PositionsAvailableVocabulary(StaticVocabulary):
