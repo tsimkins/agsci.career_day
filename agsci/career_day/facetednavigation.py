@@ -25,7 +25,7 @@ class Criteria(_Criteria):
 
     def getFields(self):
 
-        fields = ['majors', 'class_year', 'positions_available']
+        fields = []
 
         def sort_key(_):
             try:

@@ -38,42 +38,6 @@
 
         </div>
 
-        <div class="print-col-3">
-
-            <div
-                tal:define="majors view/majors|nothing"
-                tal:condition="majors">
-                <h4>Majors</h4>
-                <ul>
-                    <li tal:repeat="i majors"
-                        tal:content="i" />
-                </ul>
-            </div>
-
-            <div
-                tal:define="class_year view/class_year|nothing"
-                tal:condition="class_year">
-                <h4>Class Year(s)</h4>
-                <ul>
-                    <li tal:repeat="i class_year"
-                        tal:content="i" />
-                </ul>
-            </div>
-
-            <div
-                tal:define="positions_available view/positions_available|nothing"
-                tal:condition="positions_available">
-                <h4>Positions Available</h4>
-                <ul>
-                    <li tal:repeat="i positions_available"
-                        tal:content="i" />
-                </ul>
-            </div>
-
-            <div class="visualClear"><!-- --></div>
-
-        </div>
-
         <div class="visualClear"><!-- --></div>
 
     </metal:block>
