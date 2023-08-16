@@ -26,7 +26,9 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
   <element value="plone.app.content.interfaces.INameFromTitle" />
+  <element value="plone.app.contenttypes.behaviors.richtext.IRichTextBehavior" />
   <element value="agsci.common.content.behaviors.leadimage.ILeadImageExtra" />
+  <element value="plone.app.dexterity.behaviors.metadata.IPublication" />
  </property>
 
   <property name="schema">agsci.career_day.content.IEmployerContainer</property>

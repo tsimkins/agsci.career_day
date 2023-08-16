@@ -16,13 +16,9 @@
     </a>
 </p>
 
-  <div id="parent-fieldname-text"
-       tal:define="text context/aq_base/text|nothing"
-       tal:condition="text"
-       tal:content="structure python:context.text.output_relative_to(view.context)" />
+  <metal:listingmacro define-macro="listing">
+    <tal:results define="batch view/brains|view/batch">
 
-  <tal:results define="batch view/batch|nothing">
-    <metal:listingmacro define-macro="listing">
       <tal:listing condition="batch">
         <section class="entries container px-2 px-md-0" metal:define-slot="entries"
             tal:define="normalizeString nocall: context/plone_utils/normalizeString;
@@ -46,21 +42,22 @@
 
     <metal:block define-slot="entry">
 
-        <a tal:attributes="href item_url;
-                           class string:card $item_type_class $item_wf_state_class url;
-                           title item_title">
-
             <div class="entry container mx-0 mb-4">
 
                 <div class="row align-items-stretch">
 
                     <div tal:attributes="class python:view.item_class(item)">
+                        <a tal:attributes="href item_url;
+                           class string: $item_type_class $item_wf_state_class url;
+                           title item_title"
+                           tal:omit-tag="view/anonymous">
 
-                        <div class="a px-0 pb-1 mb-1 summary"
-                                tal:content="item_title" />
 
+                            <h3 class="a px-0 pb-1 mb-1 summary"
+                                    tal:content="item_title" />
+                        </a>
                         <tal:html
-                            tal:define="employer_html python: view.get_html(brain)"
+                            tal:define="employer_html python: view.get_html(item)"
                             tal:content="structure employer_html" />
 
                     </div>
@@ -74,7 +71,6 @@
                     </div>
                 </div>
             </div>
-        </a>
 
     </metal:block>
 </tal:block>
@@ -89,17 +85,11 @@
         <tal:empty
             tal:condition="not: view/anonymous|nothing">
 
-        <p class="discreet"
-            tal:condition="not: view/batch"
-            tal:content="view/no_items_message">
-          There are currently no items in this folder.
-        </p>
-
         </tal:empty>
 
       </metal:empty>
-    </metal:listingmacro>
-  </tal:results>
+    </tal:results>
+  </metal:listingmacro>
 
 </metal:block>
 </metal:content-core>

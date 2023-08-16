@@ -1,4 +1,5 @@
 <metal:block tal:define="plone_view python:context.restrictedTraverse('@@plone')">
+
 <tal:main define="
   batch_base_url here/absolute_url;
   folderContents view/brains;
@@ -10,7 +11,7 @@
     getKssClasses nocall:kssClassesView/getKssClassesInlineEditable | nothing;
     templateId template/getId | nothing">
 
-    <p class="print-hidden">
+    <p class="print-hidden html">
         <a tal:attributes="href string:${context/absolute_url}/@@all">
             View a list of all registered exhibitors
         </a>
@@ -38,6 +39,7 @@
             <metal:items metal:use-macro="context/@@all/macros/listing" />
 
         </metal:items>
+
 
     </tal:main>
 

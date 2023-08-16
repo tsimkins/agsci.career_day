@@ -8,7 +8,7 @@
 
     <metal:block define-macro="content-core">
 
-        <div class="contentLeadImageContainer"
+        <div class="col-6 col-md-3 float-right"
             tal:condition="view/has_logo">
             <img tal:replace="structure view/tag" />
         </div>
@@ -16,17 +16,12 @@
         <metal:description
             define-slot="description">
 
-            <div class="tileDescription" tal:content="view/description|nothing" />
+            <p class="lead mt-1" tal:content="view/description|nothing" />
 
         </metal:description>
 
-        <tal:text
-            define="text context/text|nothing"
-            condition="text"
-            content="structure text/raw" />
-
         <div
-            class="website"
+            class="website html"
             tal:define="website view/website|nothing"
             tal:condition="website">
             <h4>Company Website</h4>
@@ -38,7 +33,39 @@
 
         </div>
 
-        <div class="visualClear"><!-- --></div>
+        <div class="row">
+
+            <div class="col-12 col-md-4 html"
+                tal:define="majors view/majors|nothing"
+                tal:condition="majors">
+                <h4>Majors</h4>
+                <ul>
+                    <li tal:repeat="i majors"
+                        tal:content="i" />
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-4 html"
+                tal:define="class_year view/class_year|nothing"
+                tal:condition="class_year">
+                <h4>Class Year(s)</h4>
+                <ul>
+                    <li tal:repeat="i class_year"
+                        tal:content="i" />
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-4 html"
+                tal:define="positions_available view/positions_available|nothing"
+                tal:condition="positions_available">
+                <h4>Positions Available</h4>
+                <ul>
+                    <li tal:repeat="i positions_available"
+                        tal:content="i" />
+                </ul>
+            </div>
+
+        </div>
 
     </metal:block>
 

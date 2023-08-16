@@ -11,7 +11,7 @@
     <metal:block define-macro="content-core">
 
         <div class="eea-preview-items"
-            tal:define="folderContents view/getFolderContents">
+            tal:define="folderContents view/batch">
 
                 <metal:items metal:use-macro="context/faceted-preview-items/macros/items" />
         </div>

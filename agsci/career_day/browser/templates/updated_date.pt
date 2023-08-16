@@ -1,4 +1,10 @@
-<div class="updated"
+<div id="career-day-text">
+  <div id="parent-fieldname-text"
+       tal:define="text context/aq_base/text|nothing"
+       tal:condition="text"
+       tal:content="structure python:context.text.output_relative_to(view.context)" />
+</div>
+<div id="career-day-updated"
     tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
 
     <p class="discreet">

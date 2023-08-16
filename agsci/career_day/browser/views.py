@@ -1,13 +1,13 @@
-from eea.facetednavigation.browser.app.query import FacetedQueryHandler
-from eea.facetednavigation.caching import ramcache
 from eea.facetednavigation.caching import cacheKeyFacetedNavigation
+from eea.facetednavigation.caching import ramcache
 from eea.facetednavigation.interfaces import ICriteria
-from plone.app.textfield.value import RichTextValue
+from eea.facetednavigation.browser.app.query import FacetedQueryHandler
 from plone.dexterity.utils import createContentInContainer
 from plone.namedfile.file import NamedBlobImage
 from bs4 import BeautifulSoup
 from agsci.common.utilities import ploneify
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.PloneBatch import Batch
 from Products.Five import BrowserView
 from zope.component import getUtility, getMultiAdapter
 from zope.schema import getFieldsInOrder
@@ -17,10 +17,10 @@ import csv
 import re
 import requests
 
-
+from agsci.common.browser.views import BaseView as _BaseView
 from ..content import IEmployer
 
-class BaseView(BrowserView):
+class BaseView(_BaseView):
 
     @property
     def portal_catalog(self):
@@ -39,19 +39,19 @@ class EmployerView(BaseView):
 
     @property
     def has_logo(self):
-        logo = getattr(self.context, 'image', None)
 
-        if logo and hasattr(logo, 'size') and logo > 0:
+        logo = getattr(self.context.aq_base, 'image', None)
+
+        if logo and hasattr(logo, 'size') and logo.size > 0:
             return True
 
         return False
 
-    def tag(self, css_class='', scale='leadimage'):
+    def tag(self, css_class='img-fluid', scale='preview'):
 
         if self.has_logo:
             alt = u'%s Logo' % self.context.Title()
             images = self.context.restrictedTraverse('@@images')
-
             return images.tag('image', scale=scale, alt=alt, css_class=css_class)
 
         return ''
@@ -117,12 +117,20 @@ class EmployerContainerView(BaseView):
     def getQuery(self):
         return {'Type' : 'Employer', 'sort_on' : 'sortable_title'}
 
-    def getFolderContents(self):
+    @property
+    def results(self):
         return self.portal_catalog.searchResults(self.getQuery())
+
+    @property
+    def batch(self):
+        return Batch(self.results, 99999, start=0)
 
     def get_html(self, r):
         o = r.getObject()
-        v = o.restrictedTraverse('@@content')
+        try:
+            v = o.restrictedTraverse('@@content')
+        except:
+            return "ERROR"
         return v()
 
 class PloneSiteFacetedQueryHandler(EmployerContainerView, FacetedQueryHandler):
@@ -158,7 +166,7 @@ class PloneSiteFacetedQueryHandler(EmployerContainerView, FacetedQueryHandler):
             self.brains = []
         else:
             kwargs['batch'] = False
-            self.brains = self.query(**kwargs)
+            self.brains = Batch(self.query(**kwargs), 99999, start=0)
 
         return self.index()
 
@@ -185,6 +193,10 @@ class ProcessImportEmployersView(BaseView):
         'majors_interested_in_recruiting' : 'majors',
         'organization_description_to_be_included_in_event_materials_please_limit_to_space_provided_max_200_words' : 'description',
         'please_upload_a_high_resolution_organization_logo_here_jpeg_or_gif_format' : 'image',
+        'my_organization_is_interested_in_recruiting_for_the_following_positions_check_all_that_apply' : 'positions_available',
+        'my_organization_is_interested_in_recruiting_students_in_the_following_programs_check_all_that_apply_this_information_will_be_used_to_help_students_search_for_employers_to_visit_so_please_be_sure_to_select_all_majors_that_you_are_open_to_recruiting' : 'majors',
+        'please_include_a_description_of_your_organization_and_a_high_resolution_logo_utilizing_the_fields_below_organization_description_to_be_included_in_event_materials_please_limit_to_space_provided_200_word_maximum' : 'description',
+        'organization_website_url' : 'website',
     }
 
     def format_key(self, name):
@@ -201,7 +213,7 @@ class ProcessImportEmployersView(BaseView):
         name = all_cap_re.sub(r'\1_\2', name).lower()
         name = underscore_re.sub('_', name)
 
-        return self.transforms.get(name, '')
+        return self.transforms.get(name, name)
 
     def process_csv(self, csv_file):
 
@@ -216,9 +228,14 @@ class ProcessImportEmployersView(BaseView):
         headers = rows.pop(0)
         headers = [self.format_key(x) for x in headers]
 
+        vocab_errors = []
+
         for row in rows:
 
-            decoded_row = [x.decode('cp1252') for x in row]
+            try:
+                decoded_row = [x.decode('utf-8') for x in row]
+            except UnicodeDecodeError:
+                decoded_row = [x.decode('cp1252') for x in row]
 
             _ = dict(zip(headers, decoded_row))
 
@@ -228,7 +245,10 @@ class ProcessImportEmployersView(BaseView):
             for k in ['class_year', 'majors', 'positions_available']:
                 if _.has_key(k):
                     _[k] = [x.strip() for x in _[k].split(',')]
-                    _[k] = self.vocab_filter(k, _[k])
+                    try:
+                        _[k] = self.vocab_filter(k, _[k])
+                    except ValueError as e:
+                        vocab_errors.append(e)
 
             # Website
             website = _.get('website', None)
@@ -238,6 +258,9 @@ class ProcessImportEmployersView(BaseView):
                     _['website'] = 'http://%s' % website
 
             data.append(_)
+
+        if vocab_errors:
+            raise ValueError(vocab_errors)
 
         return data
 
@@ -316,7 +339,7 @@ class ProcessImportEmployersView(BaseView):
 
             v = set(values) & set(v)
 
-            return list(v)
+            return [x for x in values if x in list(v)]
 
         return []
 

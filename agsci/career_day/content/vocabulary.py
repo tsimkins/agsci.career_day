@@ -73,12 +73,12 @@ class ClassYearVocabulary(StaticVocabulary):
         u'Sophomore',
         u'Freshman',
         u'Alumni',
-        u'Graduate Student',
         u'First-year',
         u'Second-year',
         u'Third-year',
         u'Fourth-year or above',
         u"Fourth-year and Above",
+        u'Graduate Student',
     ]
 
 class PositionsAvailableVocabulary(StaticVocabulary):
