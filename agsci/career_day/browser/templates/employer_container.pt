@@ -1,51 +1,108 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  metal:use-macro="context/main_template/macros/master"
-  i18n:domain="eea">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="plone">
 <body>
 
-  <metal:content-core fill-slot="content-core">
-    <metal:block define-macro="content-core">
+<metal:content-core fill-slot="content-core">
+<metal:block define-macro="content-core">
 
-        <p class="print-hidden">
-            <a tal:attributes="href context/absolute_url">
-                Filter Employers
-            </a>
-        </p>
+<p class="print-hidden html">
+    <a tal:attributes="href context/absolute_url">
+        Filter Employers
+    </a>
+</p>
 
-        <tal:items
-            tal:define="folderContents view/getFolderContents">
+  <div id="parent-fieldname-text"
+       tal:define="text context/aq_base/text|nothing"
+       tal:condition="text"
+       tal:content="structure python:context.text.output_relative_to(view.context)" />
 
-            <metal:listing metal:define-macro="listing">
-                <div class="faceted-results">
-                    <tal:items repeat="brain folderContents">
-                        <div class="tileItem"
-                            tal:define="normalizeString nocall: context/plone_utils/normalizeString;
-                                        item_wf_state brain/review_state|nothing;
-                                        item_wf_state_class python:'state-' + normalizeString(item_wf_state)">
-                            <h3>
-                                <a tal:attributes="href brain/getURL;
-                                                    class string: $item_wf_state_class;"
-                                    tal:omit-tag="view/anonymous">
-                                    <span tal:replace="brain/Title" />
-                                </a>
-                            </h3>
-                            <div>
-                                <tal:html
-                                    tal:define="employer_html python: view.get_html(brain)"
-                                    tal:content="structure employer_html" />
-                            </div>
-                        </div>
-                    </tal:items>
+  <tal:results define="batch view/batch|nothing">
+    <metal:listingmacro define-macro="listing">
+      <tal:listing condition="batch">
+        <section class="entries container px-2 px-md-0" metal:define-slot="entries"
+            tal:define="normalizeString nocall: context/plone_utils/normalizeString;
+                        enhanced_public_tags view/enhanced_public_tags|nothing">
+          <tal:repeat repeat="item batch" metal:define-macro="entries">
+            <tal:block tal:define="obj item/getObject;
+                item_url python:view.getItemURL(item);
+                item_id item/getId;
+                item_title item/Title;
+                item_description item/Description;
+                item_type item/Type;
+                item_modified item/ModificationDate;
+                item_created item/CreationDate;
+                item_type_class python:'contenttype-' + normalizeString(item_type);
+                item_wf_state item/review_state;
+                item_wf_state_class python:'state-' + normalizeString(item_wf_state);
+                item_creator item/Creator;
+                item_has_image python:item.getIcon;
+                item_public_tags item/public_tags|item/Tags|nothing;
+                item_public_tags python: view.format_tags(item_public_tags)">
+
+    <metal:block define-slot="entry">
+
+        <a tal:attributes="href item_url;
+                           class string:card $item_type_class $item_wf_state_class url;
+                           title item_title">
+
+            <div class="entry container mx-0 mb-4">
+
+                <div class="row align-items-stretch">
+
+                    <div tal:attributes="class python:view.item_class(item)">
+
+                        <div class="a px-0 pb-1 mb-1 summary"
+                                tal:content="item_title" />
+
+                        <tal:html
+                            tal:define="employer_html python: view.get_html(brain)"
+                            tal:content="structure employer_html" />
+
+                    </div>
+
+                    <div tal:condition="python: view.show_item_image(item)"
+                      class="col-12 col-sm-6 col-md-4 col-xl-3 order-sm-2 order-1 pl-sm-3 pl-0 pr-0 mb-md-0 mb-3">
+                        <img class="w-100"
+                                alt=""
+                                tal:attributes="src string:${view/assets_url}/images/card-placeholder.jpg;
+                                                data-src string:$item_url/@@images/image/large_listing" />
+                    </div>
                 </div>
-            </metal:listing>
-        </tal:items>
+            </div>
+        </a>
 
     </metal:block>
-  </metal:content-core>
+</tal:block>
+          </tal:repeat>
+        </section>
+
+        <div metal:use-macro="context/batch_macros/macros/navigation" />
+
+      </tal:listing>
+
+      <metal:empty metal:define-slot="no_items_in_listing">
+        <tal:empty
+            tal:condition="not: view/anonymous|nothing">
+
+        <p class="discreet"
+            tal:condition="not: view/batch"
+            tal:content="view/no_items_message">
+          There are currently no items in this folder.
+        </p>
+
+        </tal:empty>
+
+      </metal:empty>
+    </metal:listingmacro>
+  </tal:results>
+
+</metal:block>
+</metal:content-core>
+
 </body>
 </html>
-

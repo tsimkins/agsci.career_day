@@ -9,7 +9,7 @@
         for="..content.IEmployer"
         class=".views.EmployerView"
         template="templates/employer.pt"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         permission="zope2.View"
     />
 
@@ -18,7 +18,7 @@
         for="..content.IEmployer"
         class=".views.EmployerView"
         template="templates/employer_content.pt"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         permission="zope2.View"
     />
 
@@ -27,7 +27,7 @@
         manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
         class=".viewlets.BannerViewlet"
         permission="zope2.View"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         for="..content.IEmployerContainer"
         template="templates/banner.pt"
     />
@@ -37,7 +37,7 @@
         manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
         class=".viewlets.VideoViewlet"
         permission="zope2.View"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         for="..content.IEmployerContainer"
         template="templates/video.pt"
     />
@@ -47,7 +47,7 @@
         manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
         class=".viewlets.UpdatedDateViewlet"
         permission="zope2.View"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         for="..content.IEmployerContainer"
         template="templates/updated_date.pt"
     />
@@ -57,13 +57,13 @@
 
     <browser:resource
         name="eea.facetednavigation.widgets.select.view.js"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         file="./templates/widget-select-view.js"
     />
 
     <browser:resource
         name="banner.png"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         file="resources/banner.png"
     />
 
@@ -89,7 +89,7 @@
         for="..content.IEmployerContainer"
         class=".views.EmployerContainerView"
         template="templates/employer_container.pt"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         permission="zope2.View"
     />
 
@@ -97,7 +97,7 @@
         name="import_employers"
         for="..content.IEmployerContainer"
         class=".views.ImportEmployersView"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         template="templates/import_employers.pt"
         permission="cmf.ManagePortal"
     />
@@ -106,7 +106,7 @@
         name="process_import_employers"
         for="..content.IEmployerContainer"
         class=".views.ProcessImportEmployersView"
-        layer="Products.agCommon.browser.interfaces.IThemeSpecific"
+        layer="agsci.common.browser.interfaces.IThemeSpecific"
         permission="cmf.ManagePortal"
     />
 

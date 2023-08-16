@@ -12,6 +12,7 @@
  <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
+    <element value="agsci_homepage" />
     <element value="employer"/>
  </property>
  <property name="allow_discussion">False</property>
@@ -25,6 +26,7 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
   <element value="plone.app.content.interfaces.INameFromTitle" />
+  <element value="agsci.common.content.behaviors.leadimage.ILeadImageExtra" />
  </property>
 
   <property name="schema">agsci.career_day.content.IEmployerContainer</property>

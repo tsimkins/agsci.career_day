@@ -1,10 +1,10 @@
-from Products.agCommon.browser.viewlets import AgCommonViewlet
+from agsci.common.browser.viewlets import ViewletBase
 
-class BannerViewlet(AgCommonViewlet):
+class BannerViewlet(ViewletBase):
     pass
 
-class VideoViewlet(AgCommonViewlet):
+class VideoViewlet(ViewletBase):
     pass
 
-class UpdatedDateViewlet(AgCommonViewlet):
+class UpdatedDateViewlet(ViewletBase):
     pass

@@ -5,8 +5,8 @@ from eea.facetednavigation.interfaces import ICriteria
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.utils import createContentInContainer
 from plone.namedfile.file import NamedBlobImage
-from BeautifulSoup import BeautifulSoup
-from Products.agCommon import ploneify
+from bs4 import BeautifulSoup
+from agsci.common.utilities import ploneify
 from Products.CMFCore.utils import getToolByName
 from Products.Five import BrowserView
 from zope.component import getUtility, getMultiAdapter
