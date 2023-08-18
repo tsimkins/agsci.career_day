@@ -42,7 +42,7 @@
 
     <metal:block define-slot="entry">
 
-            <div class="entry container mx-0 mb-4">
+            <div class="entry container mx-0 mb-4 border-bottom">
 
                 <div class="row align-items-stretch">
 
@@ -52,9 +52,14 @@
                            title item_title"
                            tal:omit-tag="view/anonymous">
 
+                            
+                            <h3 class="px-0 pb-1 mb-1 summary"
+                                    tal:content="item_title"
+                                    tal:condition="view/anonymous" />
 
                             <h3 class="a px-0 pb-1 mb-1 summary"
-                                    tal:content="item_title" />
+                                    tal:content="item_title"
+                                    tal:condition="not: view/anonymous" />
                         </a>
                         <tal:html
                             tal:define="employer_html python: view.get_html(item)"
