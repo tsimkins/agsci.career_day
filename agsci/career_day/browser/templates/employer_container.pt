@@ -53,11 +53,11 @@
                            tal:omit-tag="view/anonymous">
 
                             
-                            <h3 class="px-0 pb-1 mb-1 summary"
+                            <h3 class="px-0 pb-1 my-1 summary"
                                     tal:content="item_title"
                                     tal:condition="view/anonymous" />
 
-                            <h3 class="a px-0 pb-1 mb-1 summary"
+                            <h3 class="a px-0 pb-1 my-1 summary"
                                     tal:content="item_title"
                                     tal:condition="not: view/anonymous" />
                         </a>
