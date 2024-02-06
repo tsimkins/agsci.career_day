@@ -9,7 +9,7 @@ from eea.facetednavigation.settings.interfaces import IDontInheritConfiguration
 from zope.globalrequest import getRequest
 from Products.CMFCore.utils import getToolByName
 
-from content import IEmployer
+from .content import IEmployer
 
 @implementer(ICriteria)
 class Criteria(_Criteria):
@@ -83,7 +83,7 @@ class Criteria(_Criteria):
         cache = IAnnotations(self.request)
         key = 'eea.facetednav.%s' % self.context.UID()
 
-        if not cache.has_key(key):
+        if key not in cache:
             cache[key] = self.__criteria()
 
         return cache[key]

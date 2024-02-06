@@ -239,11 +239,11 @@ class ProcessImportEmployersView(BaseView):
 
             _ = dict(zip(headers, decoded_row))
 
-            if _.has_key(''):
+            if '' in __:
                 del _['']
 
             for k in ['class_year', 'majors', 'positions_available']:
-                if _.has_key(k):
+                if k in _:
                     _[k] = [x.strip() for x in _[k].split(',')]
                     try:
                         _[k] = self.vocab_filter(k, _[k])
@@ -295,7 +295,7 @@ class ProcessImportEmployersView(BaseView):
                     if response.headers.get('Content-Type', None) in self.valid_image_types:
                         return response.content
                     else:
-                        print "ERROR in Content-Type: %s" % image_url
+                        print ("ERROR in Content-Type: %s" % image_url)
 
     def get_vocab_values(self, field):
 

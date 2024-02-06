@@ -4,7 +4,7 @@ from plone.app.textfield import RichText
 from plone.autoform import directives as form
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.namedfile.field import NamedBlobFile
-from zope.interface import Interface, provider, invariant, Invalid, implementer, implements
+from zope.interface import provider
 from plone.app.content.interfaces import INameFromTitle
 from zope.component import adapter
 from plone.namedfile.field import NamedBlobImage

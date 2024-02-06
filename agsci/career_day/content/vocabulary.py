@@ -1,12 +1,11 @@
 from Products.CMFCore.utils import getToolByName
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from zope.interface import directlyProvides, implements
+from zope.interface import directlyProvides, implementer
 from datetime import datetime, timedelta
 
+@implementer(IVocabularyFactory)
 class StaticVocabulary(object):
-
-    implements(IVocabularyFactory)
 
     preserve_order = False
 
@@ -24,9 +23,8 @@ class StaticVocabulary(object):
 
         return SimpleVocabulary(terms)
 
+@implementer(IVocabularyFactory)
 class KeyValueVocabulary(object):
-
-    implements(IVocabularyFactory)
 
     items = [
         ('N/A', 'N/A'),
