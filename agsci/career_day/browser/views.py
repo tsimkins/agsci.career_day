@@ -221,7 +221,7 @@ class ProcessImportEmployersView(BaseView):
 
         filename = csv_file.name
 
-        reader = csv.reader(open(filename, 'rU'), delimiter=',', quotechar='"')
+        reader = csv.reader(open(filename, 'r'), delimiter=',', quotechar='"', dialect='excel')
 
         rows = [x for x in reader]
 
@@ -232,23 +232,17 @@ class ProcessImportEmployersView(BaseView):
 
         for row in rows:
 
-            try:
-                decoded_row = [x.decode('utf-8') for x in row]
-            except UnicodeDecodeError:
-                decoded_row = [x.decode('cp1252') for x in row]
-
-            _ = dict(zip(headers, decoded_row))
-
-            if '' in __:
-                del _['']
+            _ = dict(zip(headers, row))
 
             for k in ['class_year', 'majors', 'positions_available']:
                 if k in _:
-                    _[k] = [x.strip() for x in _[k].split(',')]
-                    try:
-                        _[k] = self.vocab_filter(k, _[k])
-                    except ValueError as e:
-                        vocab_errors.append(e)
+                    _[k] = [x.strip() for x in _[k].split(',') if x.strip()]
+
+                    if _[k]:
+                        try:
+                            _[k] = self.vocab_filter(k, _[k])
+                        except ValueError as e:
+                            vocab_errors.append(e)
 
             # Website
             website = _.get('website', None)

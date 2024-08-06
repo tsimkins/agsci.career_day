@@ -41,6 +41,11 @@ class KeyValueVocabulary(object):
 class MajorVocabulary(StaticVocabulary):
 
     items = [
+        u'Agricultural and Biorenewable Systems Management',
+        u'Immunology and Infectious Disease',
+        u'Pharmacology and Toxicology',
+        u'Veterinary and Biomedical Sciences',
+        u'Wildlife and Fisheries Science',
         u'Agribusiness Management',
         u'Agricultural & Extension Education',
         u'Agricultural Science',
