@@ -52,7 +52,7 @@ class MajorVocabulary(StaticVocabulary):
         u'Animal Science',
         u'Biological Engineering',
         u'BioRenewable Systems',
-        u'Community Environment & Development',
+        u'Community Environment and Development',
         u'Environmental Resource Management',
         u'Food Science',
         u'Forest Ecosystem Management',
