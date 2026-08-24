@@ -71,15 +71,10 @@ class ClassYearVocabulary(StaticVocabulary):
     preserve_order = True
 
     items = [
-        u'Senior',
-        u'Junior',
-        u'Sophomore',
-        u'Freshman',
         u'Alumni',
         u'First-year',
         u'Second-year',
         u'Third-year',
-        u'Fourth-year or above',
         u"Fourth-year and Above",
         u'Graduate Student',
     ]
